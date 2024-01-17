@@ -1,13 +1,677 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+:root {
+  --couleur-bleuf1: #34558B;
+  --couleur-bleuc2: #488FB1;
+  --couleur-bleuc3: #7fd3c4;
+  --couleur-bleuc4: #57cc99;
+  --couleur-vertc1: #a0d995;
+  --couleur-vertc2: #D2E69c;
+
+  --couleur-blanc1:#F2F4F9;
+  
+
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.bodyperso{
+  
+  overflow: hidden;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 0.25fr 1fr 0.25fr;
+  grid-template-areas: 
+  "sidegauche main sidedroite";
 }
+
+.main{
+  background-color: #F2F4F9;
+  grid-area: main;
+  display: grid;
+  grid-template-rows: 75px 1fr;
+  grid-template-areas: 
+  "haut"
+  "bas" 
+  ;
+  transition: 0.3s ease-in-out;
+}
+
+.dashboardintit{
+  grid-area: haut;
+}
+
+.sidegauche{
+  grid-area: sidegauche;
+  background-color: #F2F4F9;
+  transition: 0.3s ease-in-out;
+}
+
+.sidedroite{
+  grid-area: sidedroite;
+
+  background-color: #F2F4F9;
+  transition: 0.3s ease-in-out;
+}
+
+
+
+
+
+.maingrid{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 0.5fr 0.5fr 1fr;
+  gap: 50px;
+  grid-template-areas: 
+  "c1 c2 c3"
+  "c4 c5 c3"
+  "c6 c6 c6"
+  ;
+}
+
+.card{
+  border-radius: 10px;
+  background-color: white;
+}
+
+.card:nth-child(1){
+grid-area: c5;
+}
+
+.card:nth-child(2){
+  grid-area: c2;
+}
+
+.card:nth-child(3){
+    grid-area: c3;
+}
+
+.card:nth-child(4){
+  grid-area: c4;
+}
+
+.card:nth-child(5){
+  grid-area: c1;
+}
+
+.card:nth-child(6){
+  grid-area: c6;
+  }
+
+  
+  .carduno {
+    transition: opacity 0.2s ease;
+    box-shadow: inset 0px 0px 200px 1px rgba(0, 0, 0, 0.534);
+    opacity: 0;
+}
+
+.carduno:hover {
+    opacity: 1;
+}
+
+
+
+.c1affchart{
+  animation: opacity 0.5s ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+.affmoonsun{
+  animation: opacity 0.3s ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+
+
+@keyframes opacity{
+  0%{
+    opacity: 0;
+  }
+  100%{
+    opacity: 1;
+  }
+}
+
+.outlined-text {
+  font-weight: bold;
+  font-size: 1.125rem; /* Correspond à peu près à text-lg */
+  color: black; /* Couleur du texte */
+  -webkit-text-stroke-width: 1px; /* Épaisseur du contour */
+  -webkit-text-stroke-color: red; /* Couleur du contour */
+}
+
+
+
+@keyframes disp {
+  0%{
+    opacity: 1;
+  }
+  100%{
+    opacity: 0;
+  }
+}
+
+@keyframes scl {
+  0%{
+    transform: scale(1);
+  }
+  100%{
+    transform: scale(0.9);
+  }
+}
+
+.disparition{
+    animation: disp 0.5s ease-in-out,scl 0.5s ease-in-out;
+    animation-fill-mode: forwards;
+}
+
+.dispnone{
+  display: none;
+}
+
+
+.text-stroke {
+  color: white; 
+  -webkit-text-stroke: 2px var(--couleur-bleuc3); 
+  font-size: 32px;
+}
+
+
+.table{
+  display: block;
+  overflow: hidden;
+  table-layout: fixed;
+  border-collapse: collapse;
+  box-shadow: 0px 10px 10px #ccc;
+  border-radius: 10px;
+  white-space: nowrap;
+  width: 100em;
+  max-height: 10em;
+  max-width: 60%;
+  margin: auto;
+  overflow-y: auto;
+  transition: 0.3s ease-in-out;
+}
+
+#dark .table {
+  --tw-shadow: 0 20px 25px -5px rgba(255, 255, 255, 0.1), 0 8px 10px -6px rgba(255, 255, 255, 0.1);
+    --tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+    transition: 0.3s ease-in-out;
+}
+
+
+.table::-webkit-scrollbar {
+  width:8px; /* Largeur de la barre de défilement */
+  border-radius: 4px; /* Rayon pour rendre la barre de défilement arrondie */
+}
+
+.table::-webkit-scrollbar-track {
+  background-color: #f1f1f1; /* Couleur de fond de la piste de la barre de défilement */
+  border-radius: 4px; /* Rayon pour rendre la piste de défilement arrondie */
+}
+
+.table::-webkit-scrollbar-thumb {
+  background-color: #888; /* Couleur de la barre de défilement */
+  border-radius: 4px; /* Rayon pour rendre la barre de défilement arrondie */
+}
+
+/* Styles pour Firefox */
+.table {
+  scrollbar-width: thin; /* Épaisseur de la barre de défilement */
+  scrollbar-color: #888 #f1f1f1; /* Couleur de la barre de défilement et de la piste */
+}
+
+
+
+.table thead{
+  background-color: var(--couleur-bleuf1);
+  color: white;
+}
+
+.table th,
+.table td{
+  padding:0.8rem;
+}
+
+.table td{
+  border-top: 0.5px solid #ddd;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.table tbody tr:hover{
+  background-color: #eee;
+  
+}
+
+#dark .table tbody tr{
+  background-color: #dfdfdf;
+  
+}
+
+#dark .table tbody tr:hover{
+  background-color: #ffffff;
+  
+}
+
+
+.actions{
+  display: flex;
+  justify-content: center;
+}
+
+.actions svg{
+  cursor: pointer;
+  color: red;
+}
+
+.expand{
+  width: 100%;
+  text-align: center;
+}
+
+.apparbtn{
+  animation: opacity 1s ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+.apprligne{
+  animation: trsl 0.5s ease-in-out, opacity 0.5s ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+
+@keyframes trsl{
+  0%{
+    transform: translateX(-30px);
+  }
+  100%{
+    transform: translateX(0px);
+  }
+}
+
+
+
+@keyframes trsl2{
+  0%{
+    transform: translateY(-30px);
+  }
+  100%{
+    transform: translateY(0px);
+  }
+}
+
+@keyframes trsl3{
+  0%{
+    transform: translateY(-10px);
+  }
+  100%{
+    transform: translateY(0px);
+  }
+}
+
+
+.logocov {
+  transition: transform 0.35s ease-in-out;
+}
+
+.logocov:hover {
+  transform: rotate(45deg);
+}
+
+
+
+.polygone {
+  width: 18.65em;
+  height: 2.8em;
+  background-color: rgb(255, 255, 255);
+  clip-path: polygon(10% 0%, 90% 0%, 100% 50%, 90% 100%, 10% 100%, 0 50%);
+  display: flex;
+  align-items: end;
+  justify-content: start;
+  transition: 0.3s ease-in-out;
+}
+
+.containerpath{
+  width: 19em;
+  height: 3em;
+  clip-path: polygon(10% 0%, 90% 0%, 100% 50%, 90% 100%, 10% 100%, 0 50%);
+  background-color: var(--couleur-bleuf1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translate3d(-33px,-25px,0px);
+}
+
+
+.polygone2 {
+  width: 31.65em;
+  height: 2.8em;
+  background-color: rgb(255, 255, 255);
+  clip-path: polygon(10% 0%, 90% 0%, 100% 50%, 90% 100%, 10% 100%, 0 50%);
+  display: flex;
+  align-items: end;
+  justify-content: start;
+  transition: 0.3s ease-in-out;
+}
+
+.containerpath2{
+  width: 32em;
+  height: 3em;
+  clip-path: polygon(10% 0%, 90% 0%, 100% 50%, 90% 100%, 10% 100%, 0 50%);
+  background-color: var(--couleur-bleuf1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translate3d(-53px,-25px,0px);
+}
+
+
+.gridtableaumoyenne{
+  display: grid;
+  grid-template-columns: 1fr 1fr ;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 20px;
+  padding: 20px;
+  grid-template-areas: 
+  "p1 p2"
+  "p3 p4"
+  
+  ;
+ 
+}
+
+.plate{
+  border-radius: 8px;
+  background-color: rgb(255, 255, 255);
+}
+
+.plate:nth-child(1){
+  grid-area: p1;
+}
+
+.plate:nth-child(2){
+  grid-area: p2;
+}
+
+.plate:nth-child(3){
+  grid-area: p3;
+}
+
+.plate:nth-child(4){
+  grid-area: p4;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+.plate{
+  width: 100%;
+  height: 100%;
+}
+
+*,*::before,*::after{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.pulse{
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background: linear-gradient(#57cc99,#7fd3c4);
+  border-radius: 50%;
+}
+
+.pulse span {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: inherit;
+  border-radius: inherit;
+  opacity: .8;
+  animation: pulseAnimate 2s ease-out infinite;
+  animation-delay: calc(0.4s * var(--i));
+}
+
+@keyframes pulseAnimate{
+  100%{
+    opacity: 0;
+    transform: scale(1.4);
+  }
+}
+
+.iconnn{
+  cursor: pointer;
+}
+
+
+.textRep{
+  animation: opacity 0.4s ease-in-out, trsl3 0.4s ease-in-out;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#dark .sidegauche,#dark .sidedroite, #dark .main{
+  background-color: #1a1a1a;
+  transition: 0.3s ease-in-out;
+}
+
+#dark .vraisidegauche,#dark .vraisidedroite{
+  background-color: #4e4e4e;
+  transition: 0.3s ease-in-out;
+}
+
+.vraisidegauche,.vraisidedroite{
+  transition: 0.3s ease-in-out;
+}
+
+
+
+
+
+
+#dark .borderFlag{
+  border-color: #4e4e4e;
+  transition: 0.3s ease-in-out;
+}
+
+.borderFlag{
+  transition: 0.3s ease-in-out;
+  
+} 
+
+
+.card{
+  transition: 0.3s ease-in-out;
+}
+
+#dark .card{
+  background-color: #4e4e4e;
+  transition: 0.3s ease-in-out;
+  --tw-shadow: 0 20px 25px -5px rgba(255, 255, 255, 0.1), 0 8px 10px -6px rgba(255, 255, 255, 0.1);
+    --tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+
+#dark .polygone{
+  background-color: #4e4e4e;
+  transition: 0.3s ease-in-out;
+}
+
+.polygone{
+  transition: 0.3s ease-in-out;
+}
+
+#dark .polygone2{
+  background-color: #4e4e4e;
+  transition: 0.3s ease-in-out;
+}
+
+.polygone2{
+  transition: 0.3s ease-in-out;
+}
+
+#dark p{
+  color: white;
+  transition: 0.3s ease-in-out;
+}
+
+p{
+  transition: 0.3s ease-in-out;
+}
+
+#dark .sidegauche button{
+  background-color: #4e4e4e;
+  transition: 0.3s ease-in-out;
+}
+
+.sidegauche button{
+  transition: 0.3s ease-in-out;
+}
+
+#dark .sidegauche select{
+  color: white;
+  background-color: #4e4e4e;
+  transition: 0.3s ease-in-out;
+}
+
+.sidegauche select{
+  transition: 0.3s ease-in-out;
+}
+
+.infosRapide{
+  transition: 0.3s ease-in-out;
+  
+}
+
+#dark .infosRapide{
+  transition: 0.3s ease-in-out;
+  color: rgb(225,195,255);
+}
+
+#dark .containerpath{
+  background-color: rgb(225,195,255);
+  transition: 0.3s ease-in-out;
+}
+
+#dark .containerpath2{
+  background-color: rgb(225,195,255);
+  transition: 0.3s ease-in-out;
+}
+.containerpath{
+  transition: 0.3s ease-in-out;
+}
+
+
+.containerpath2{
+  transition: 0.3s ease-in-out;
+}
+
+#dark .plate{
+  background-color: #4e4e4e;
+  transition: 0.3s ease-in-out;
+}
+
+.plate{
+  transition: 0.3s ease-in-out;
+}
+
+#dark .repPlate{
+  background-color: #4e4e4e;
+  transition: 0.3s ease-in-out;
+}
+
+.repPlate{
+  transition: 0.3s ease-in-out;
+}
+
+#dark .dashboardColor{
+  background-color: #4e4e4e;
+  border-color: #1a1a1a;
+  transition: 0.3s ease-in-out;
+}
+
+.dashboardColor{
+  transition: 0.3s ease-in-out;
+}
+
+
+#dark .tRev{
+  color: #c61a69;
+  transition: 0.3s ease-in-out;
+}
+
+.tRev{
+  transition: 0.3s ease-in-out;
+}
+
+#dark .h2Inf{
+  color: white;
+  transition: 0.3s ease-in-out;
+}
+
+.h2Inf{
+  transition: 0.3s ease-in-out;
+}
+
+.b3{
+  transition: 0.3s ease-in-out;
+}
+
+#dark .b3{
+  border-color: rgb(225,195,255);
+  transition: 0.3s ease-in-out;
+  
+}
+
+#dark .textModal{
+  color: white;
+  transition: 0.3s ease-in-out;
+}
+
+.textModal{
+  transition: 0.3s ease-in-out;
+}
+
+.selectdark{
+  transition: 0.3s ease-in-out;
+}
+
+#dark .selectdark{
+  color: white;
+  background-color: #4e4e4e;
+  transition: 0.3s ease-in-out;
+}
+

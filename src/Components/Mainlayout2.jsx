@@ -10,6 +10,7 @@ import {BsFillTrashFill} from "react-icons/bs";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+import { Flip } from "react-toastify";
 import {
   Chart as ChartJS,
   BarElement,
@@ -43,6 +44,25 @@ import { BsChatSquareText } from "react-icons/bs";
 import { BiSolidMoon } from "react-icons/bi";
 import { BiSolidSun } from "react-icons/bi";
 import { AiOutlineLineChart } from "react-icons/ai";
+import { FaEarthAfrica } from "react-icons/fa6";
+import { GiHastyGrave } from "react-icons/gi";
+import { TbVaccine } from "react-icons/tb";
+import { BiSolidVirus } from "react-icons/bi";
+import { PiTestTubeFill } from "react-icons/pi";
+import { BiGitCompare } from "react-icons/bi";
+import gravevirus from "../Images/gravevirus.png"
+import radarimg from "../Images/radarpng.png"
+import { MoonLoader } from "react-spinners";
+import infographie from "../Images/Infographie.pdf"
+import infographiesanslegende from "../Images/Infographiesanslegendes.png";
+import infographielegende from "../Images/infographielegendes2.png"
+import { IoMdDownload } from "react-icons/io";
+import truc1 from "../Images/truc1.png"
+import truc2 from "../Images/truc2.png"
+import truc3 from "../Images/truc3.png"
+import truc4 from "../Images/truc4.png"
+import truc5 from "../Images/truc5.png"
+import truc6 from "../Images/truc6.png"
 
 
 
@@ -59,7 +79,7 @@ ChartJS.register(
   Filler
 );
 
-function Mainlayout({ isOpen, setIsOpen,openModal,handleMode,mode,setMode }) {
+function Mainlayout2({ isOpen, setIsOpen,openModal,handleMode,mode,setMode }) {
   
     const [country, setCountry] = useState("");
     const [country2, setCountry2] = useState("");
@@ -67,17 +87,15 @@ function Mainlayout({ isOpen, setIsOpen,openModal,handleMode,mode,setMode }) {
     const [affChart, setAffChart] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [tableDate, setTableDate] = useState([]);
-    const [zeroCountr, setZeroCount] = useState(null);
     const [selectedCountry, setSelectedCountry] = useState("");
     const [allCountry, setAllCountry] = useState([]);
-    const [cross, setCross] = useState(false);
     const [moyenne, setMoyenne] = useState("");
     const [medianne, setMedianne] = useState("");
     const [variance, setVariance] = useState("");
     const [casActive, setCasActive] = useState(null);
     const [pop, setPop] = useState(null);
     const [deathsTT, setDeathsTT] = useState(null);
-    const [selectedPie, setSelectedPie] = useState("Pie1");
+    const [selectedPie, setSelectedPie] = useState("Contagiosité");
     const [cas10jlength, setCas10jLength] = useState(0);
     const [guerisTT, setGuerisTT] = useState(null);
     const [nbrTestss, setNbrTestss] = useState(null);
@@ -85,7 +103,6 @@ function Mainlayout({ isOpen, setIsOpen,openModal,handleMode,mode,setMode }) {
     const [nbrTest2, setNbrTest2] = useState(null);
     const [casActive2, setCasActive2] = useState(null);
     const [deathsTT2, setDeathsTT2] = useState(null);
-    const [cross2, setCross2] = useState(false);
     const [CasVrmActive, setCasVrmActive] = useState(null);
     const [recovered, setRecovered] = useState(null);
     const [casCritical, setCasCritical] = useState(null);
@@ -134,6 +151,16 @@ function Mainlayout({ isOpen, setIsOpen,openModal,handleMode,mode,setMode }) {
     const [bleuc4,setBleuC4] = useState("#57cc99");
     const [vertc1,setVertC1] = useState("#a0d995");
     const [vertc2,setVertC2] = useState("#D2E69c");
+
+    const [ajoutClasseRouge,setAjoutClasseRouge] = useState(false);
+
+    const clsRouge =()=>{
+        setAjoutClasseRouge(true);
+        setTimeout(() => {
+            setAjoutClasseRouge(false);
+        }, 1000);
+        console.log(ajoutClasseRouge)
+    }
 
 
 
@@ -432,6 +459,7 @@ function Mainlayout({ isOpen, setIsOpen,openModal,handleMode,mode,setMode }) {
           display: affLeg, 
         },
       },
+      
     elements: {
       arc: {
         borderWidth: [
@@ -541,6 +569,8 @@ function Mainlayout({ isOpen, setIsOpen,openModal,handleMode,mode,setMode }) {
       setAffChart(false);
       setIsLoading(true);
       const response = await axios.request(options);
+      console.log(response);
+      
       
 
       const casTT = response.data.response[0].cases.total;
@@ -599,6 +629,7 @@ function Mainlayout({ isOpen, setIsOpen,openModal,handleMode,mode,setMode }) {
           draggable: true,
           progress: undefined,
           theme: "dark",
+          transition: Flip,
         });
       } else {
         toast.success("Graphique mis à jour", {
@@ -610,6 +641,7 @@ function Mainlayout({ isOpen, setIsOpen,openModal,handleMode,mode,setMode }) {
             draggable: true,
             progress: undefined,
             theme: "dark",
+            transition: Flip,
           });
       }
       setAffChart(true);
@@ -617,10 +649,24 @@ function Mainlayout({ isOpen, setIsOpen,openModal,handleMode,mode,setMode }) {
     } catch (error) {
       console.error(error);
       
+      
+    }finally {
+      setIsLoading(false);
     }
   };
 
-
+  const returnLoading = () =>{
+    
+    while(isLoading){
+      return (
+        <>
+        <div className="fixed top-0 left-0 w-full h-full bg-gray-500 flex justify-center items-center loaderrr">
+                  <MoonLoader color="white" size={80}/>
+          </div>
+        </>
+      )
+    }
+  }
 
 
 
@@ -715,216 +761,9 @@ useEffect(()=>{
     
   };
 
-  const returnCard1InfoInit = () => {
-    if (affChart && !affInfoC1) {
-      return (
-        <>
-          <div className="c1affchart  w-[100%]  h-[100%]  relative">
-            <div className="">
-              <div className="pt-2">
-               
-                <p className="text-[11px] mx-[12px] pt-4 ">
-                  *Depuis le début de la pandémie
-                </p>
-              </div>
-              <div className="absolute bottom-0">
-                <p className="px-4 py-2 text-[20px] font-bold text-vertc1 infosRapide">
-                  {pop} Hab 
-                </p>
-              </div>
-            </div>
-          </div>
+  
 
-          <div className="flex justify-center items-center w-[70%] h-full relative">
-            {selectedPie === "Pie1" ? (
-              <div className="w-[70%]">
-                <Pie data={data2} options={options2} />
-              </div>
-            ) : selectedPie === "Pie2" ? (
-              <div className="w-[70%]">
-                <Pie data={data3} options={options3} />
-              </div>
-            ) : null}
-          </div>
-
-          <div className="absolute w-full h-full cabsolute1 z-99 flex justify-center items-center carduno ess">
-            <div
-              className="bg-white p-2 rounded-lg border-2 border-bleuc2 hover:bg-slate-50 hover:cursor-pointer"
-              onClick={afficherInfoC1}
-            >
-              Afficher les informations
-            </div>
-          </div>
-        </>
-      );
-    } else if (affChart && affInfoC1) {
-      return (
-        <>
-          <div className="c1affchart  w-[100%]  h-[100%]  relative">
-            <div className="flex w-full justify-center mt-8">
-              <select
-                value={selectedPie}
-                onChange={handleChange}
-                className="border-2 border-bleuc2 rounded-md p-[2px] "
-              >
-                <option value="Pie1">Contagiosité</option>
-                <option value="Pie2">Mortalité</option>
-              </select>
-            </div>
-            {selectedPie === "Pie1" && (
-              <>
-                <div className="flex flex-col w-full pt-2">
-                  <p className="text-center">
-                    Population TT <br />{" "}
-                    <span className="font-bold text-[#A2A2A2]"> {pop}</span>
-                  </p>
-                  <div className="flex justify-center">
-                    <div className="w-[70%] h-[1px] bg-bleuf1"></div>
-                  </div>
-
-                  <p className="text-center">
-                    Cas Covid TT <br />
-                    <span className="font-bold text-bleuc3">
-                      
-                      {casActive}
-                    </span>
-                  </p>
-                </div>
-              </>
-            )}
-
-            {selectedPie === "Pie2" && (
-              <>
-                <div className="flex flex-col w-full pt-2">
-                  <p className="text-center">
-                    Cas Covid TT <br />{" "}
-                    <span className="font-bold text-bleuc3">
-                      
-                      {casActive}
-                    </span>
-                  </p>
-                  <div className="flex justify-center">
-                    <div className="w-[70%] h-[1px] bg-bleuf1"></div>
-                  </div>
-
-                  <p className="text-center">
-                    Morts TT <br />{" "}
-                    <span className="font-bold text-[#A2A2A2]">
-                     
-                      {deathsTT}
-                    </span>
-                  </p>
-                </div>
-              </>
-            )}
-          </div>
-
-          <div className="flex justify-center items-center w-[70%] h-full relative">
-            {selectedPie === "Pie1" ? (
-              <div className="w-[70%]">
-                <Pie data={data2} options={options2} />
-              </div>
-            ) : selectedPie === "Pie2" ? (
-              <div className="w-[70%]">
-                <Pie data={data3} options={options3} />
-              </div>
-            ) : null}
-          </div>
-
-          {!affInfoC1 && (
-            <div className="absolute w-full h-full cabsolute1 z-99 flex justify-center items-center carduno ess">
-              <button
-                className="bg-white p-2 rounded-lg border-2 border-bleuc2 hover:bg-slate-50 hover:cursor-pointer"
-                onClick={afficherInfoC1}
-              >
-                Afficher les informations
-              </button>
-            </div>
-          )}
-
-          <p
-            className="bg-bleuf2 text-sm px-2 py-1 hover:cursor-pointer absolute top-0 right-0 tRev font-bold"
-            onClick={afficherInfoC1}
-          >
-            Revenir
-          </p>
-        </>
-      );
-    }
-  };
-
-  const returnCard2InfoInit = () => {
-    if (affChart && !affInfoC2) {
-      return (
-        <>
-          {!affInfoC2 && (
-            
-            <div className="absolute w-full h-full cabsolute1 z-99 flex justify-center items-center carduno ess">
-              <div
-                className="bg-white p-2 rounded-lg border-2 border-bleuc2 hover:bg-slate-50 hover:cursor-pointer"
-                onClick={afficherInfoC2}
-              >
-                Afficher les informations
-              </div>
-            </div>
-          )}
-          <div className="flex h-full w-full">
-            <div className="w-[50%] h-full ">
-              <div className="c1affchart  w-[100%]  h-[100%]  relative">
-                <div className="pt-2">
-                  
-                  <p className="text-[11px] mx-[12px] pt-4 ">
-                  *Depuis le début de la pandémie
-                  </p>
-                </div>
-                <p className="absolute bottom-0 left-0 px-4 py-2 text-[20px] font-bold text-vertc1 w-[250px] infosRapide"> {guerisTT} Guérris</p>
-              </div>
-            </div>
-            <div className="w-[50%] h-full ">
-              <div className="flex justify-center items-center h-full w-full">
-                <div className="w-[80%]">
-                  <Radar data={dataRadar} options={optionsRadar} />
-                </div>
-              </div>
-            </div>
-          </div>
-        </>
-      );
-    } else if (affChart && affInfoC2) {
-      return (
-        <>
-          {!affInfoC2 && (
-            <div className="absolute w-full h-full cabsolute1 z-99 flex justify-center items-center carduno ess">
-              <div
-                className="bg-white p-2 rounded-lg border-2 border-bleuc2 hover:bg-slate-50 hover:cursor-pointer"
-                onClick={afficherInfoC2}
-              >
-                Afficher les informations
-              </div>
-            </div>
-          )}
-
-          <div className="flex justify-center h-full items-center">
-            <div className="w-[60%]">
-              <Radar data={dataRadar} options={optionsRadar} />
-            </div>
-          </div>
-
-          <p
-            className="bg-bleuf2 text-sm px-2 py-1 hover:cursor-pointer absolute top-0 right-0 tRev font-bold"
-            onClick={afficherInfoC2}
-          >
-            Revenir
-          </p>
-        </>
-      );
-    }
-  };
-
-
-
-
-
+  
 
 
 
@@ -949,6 +788,7 @@ useEffect(()=>{
   
     try {
       const response = await axios.request(options);
+      console.log(response)
       
       const europeData = response.data.response.filter(countryData => countryData.continent === "Europe");
       const africaData = response.data.response.filter(countryData => countryData.continent === "Africa");
@@ -1113,11 +953,11 @@ useEffect(()=>{
             <>
                  
             
-                 <div className="h-full w-full relative">
+                 <div className="h-full w-full relative ">
                     
                     
-                    <div className="flex w-full h-full justify-center items-center">
-                        <div className="w-[80%]">
+                    <div className="flex w-full h-full justify-center items-center ">
+                        <div className="w-[80%] ">
                           <Doughnut data={dataDoughnut} options={optionsDoughnut} plugins={[textCenter]}/>
                         </div>
                     </div>
@@ -1206,129 +1046,16 @@ useEffect(()=>{
     },
   };
 
-const returnbutton = () =>{
-    if(selectedCountry2 !== ""){
-        return (
-            <>
-            <div className="c1affchart">
-            <div className="flex justify-center">
-            <div
-              className="bg-white p-1 mt-4 rounded-lg border-2 border-bleuc2 hover:bg-slate-50 hover:cursor-pointer"
-              onClick={() => {
-                afficherInfoC4();
-                affClickRevenir();
-            }}
-            >
-              Afficher le graphique
-            </div>
-            </div>
-            </div>
-            </>
-        )
-    }
-}
 
-const returnChartBubble = () =>{
-    if(affChart && !affInfoC4 && !clickRevenir){
-        return (
-            <>
-                 
-        <div className="flex justify-end items-start h-full w-full relative">
-        <div className="pt-2">
-                  
-                  <p className="text-[11px] mx-[12px] pt-4 text-center">
-                  *Depuis le début de la pandémie
-                  </p>
-                </div>
-        <div className="absolute w-full h-full cabsolute1 z-99 flex justify-center items-center carduno ess">
-            <div
-              className="bg-white p-2 rounded-lg border-2 border-bleuc2 hover:bg-slate-50 hover:cursor-pointer z-100"
-              onClick={afficherInfoC4}
-            >
-              Afficher les informations
-            </div>
-          </div>
-        <div className="w-[80%] p-8">
-         <Bubble data={dataBubble} options={optionsBubble}/>
-         </div>
-         
-         <p className="absolute bottom-0 left-0 px-4 py-2 text-[20px] font-bold text-vertc1 infosRapide"> {nbrTestss} Tests effectués</p>
-         
-          </div>      
-                    
-              
-            </>
-          );
-    }else if(affChart && affInfoC4){
-        return(
-            <>
-            <div className="h-full w-full relative">
-               <div className="p-2">
 
-               </div>
-            <div className="px-4 py-2">
-                <p className="text-sm">
-                    Comparer les données de <span className="text-bleuf1 font-bold"> {selectedCountry} </span>avec <span className="text-bleuf1 font-bold"> {selectedCountry2} </span> :
-                </p>
-                <div className="flex justify-center items-center">
-                <select
-                    value={selectedCountry2}
-                    onChange={(e) => setSelectedCountry2(e.target.value)}
-                    className="select2 border-2 border-bleuc2 p-1 rounded-lg"
-                    >
-                    <option value="">Selectionner un pays</option>
-                    {allCountry.map((country, index) => (
-                        <option key={index} value={country}>
-                        {country}
-                        </option>
-                    ))}
-                </select>
-                </div>
-                {returnbutton()}
-            </div>
-            
-            <p
-                className="bg-bleuf2 text-sm px-2 py-1 hover:cursor-pointer absolute top-0 right-0 tRev font-bold"
-                onClick={() => {
-                    afficherInfoC4();
-                    affClickRevenir();
-                }}
-                >
-                Revenir
-            </p>
 
-          </div>
-            </>
-        )
-    } else if(affChart && clickRevenir){
-        return(
-            <>
-            <div className="flex justify-center items-center h-full w-full relative">
-                <div className="w-[85%] px-2 pt-4">
-                    <Bubble data={dataBubble} options={optionsBubble}/>
-                </div>
-                <p
-                className="bg-bleuf2 text-sm px-2 py-1 hover:cursor-pointer absolute top-0 right-0 tRev font-bold"
-                onClick={() => {
-                    afficherInfoC4();
-                    affClickRevenir();
-                }}
-                >
-                Revenir
-            </p>
-            </div>
-
-            </>
-        )
-    }
-}
 
 
 
 
 useEffect(()=>{
     if(selectedCountry2){
-        toast.success('Vous pouvez revenir en arrière', {
+        toast.success('Graphique mis à jour', {
             position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
@@ -1337,6 +1064,7 @@ useEffect(()=>{
             draggable: true,
             progress: undefined,
             theme: "dark",
+            transition: Flip,
             });
     }
 },[selectedCountry2])
@@ -1506,7 +1234,7 @@ const returnBarData = () =>{
             <>
             <div className="h-full w-full flex">
             <div className="w-[50%]  p-8 flex justify-center flex-col items-center relative ">
-                <p className="absolute bottom-0 left-0 px-4 py-2 font-bold text-bleuf1] text-[20px] infosRapide">{somme10JValue} Cas de Covid ces 10 derniers jours </p>
+                <p className="absolute bottom-0 left-0 px-4 py-2 font-bold text-bleuf1] text-[20px] infosRapide text-vertc1">{somme10JValue} Cas de Covid ces 10 derniers jours </p>
                 
                 <Bar data={data} options={options} />
             </div>
@@ -1523,9 +1251,9 @@ const returnBarData = () =>{
                       <p className="font-bold">{moyenne}</p>
                     </div> 
                     <div className="absolute bottom-0 right-0 m-1">
-                    <div className="w-8 h-8 flex justify-center items-center">
+                    <div className="w-8 h-8 flex justify-center items-center cursor-pointer" onClick={()=>{etatP2P3P4();ouvrirDiv();etatP1()}}>
                         <div className="pulse relative">
-                          <div className="absolute w-full h-full flex justify-center items-center z-10"><BsChatSquareText color="white" size={18} onClick={()=>{etatP2P3P4();ouvrirDiv();etatP1()}}  className='iconnn'  /></div>
+                          <div className="absolute w-full h-full flex justify-center items-center z-10"><BsChatSquareText color="white" size={18}  className='iconnn'  /></div>
                         
                         
 
@@ -1547,9 +1275,9 @@ const returnBarData = () =>{
                       <p className="font-bold">{variance}</p>
                     </div> 
                     <div className="absolute bottom-0 right-0 m-1">
-                    <div className="w-8 h-8 flex justify-center items-center">
+                    <div className="w-8 h-8 flex justify-center items-center cursor-pointer" onClick={()=>{etatP1P2P4();ouvrirDiv();etatP3()}}>
                         <div className="pulse relative">
-                          <div className="absolute w-full h-full flex justify-center items-center z-10"><BsChatSquareText color="white" size={18}  className='iconnn' onClick={()=>{etatP1P2P4();ouvrirDiv();etatP3()}}/></div>
+                          <div className="absolute w-full h-full flex justify-center items-center z-10"><BsChatSquareText color="white" size={18}  className='iconnn' /></div>
                         
                         
 
@@ -2634,172 +2362,208 @@ const returnBack = ()=>{
 
 
 
+const returnCard1InfoInit = () => {
+    if(affChart && clickCas){
+        return (
+            <>
+            <div className="flex flex-col justify-center items-center h-full w-full">
+                        <h2 className="text-black text-lg font-bold">
+                            {selectedPie} en {selectedCountry}
+                        </h2>
+                        <select
+                value={selectedPie}
+                onChange={handleChange}
+                className="border-2 border-bleuc2 rounded-md p-[2px] "
+              >
+                <option value="Contagiosité">Contagiosité</option>
+                <option value="Mortalité">Mortalité</option>
+              </select>
+            
+                       
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  const canvasRef = useRef(null);
-  const divRef = useRef(null); // Référence à la div pour le rendu
-  const returnplanete = ()=>{
-    const div = divRef.current; // La div pour le rendu
-    const width = div.clientWidth;
-    const height = div.clientHeight;
-
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
-    camera.position.set(0, 0, 10); // Modifier la position de la caméra pour voir la planète
-
-    const renderer = new THREE.WebGLRenderer({ canvas: canvasRef.current, alpha: true }); // Active la transparence du fond
-    renderer.setSize(width, height);
-    renderer.setClearColor(0x000000, 0); // Couleur de fond noire et totalement transparente
-
-    const geometry = new THREE.SphereGeometry(4.75, 128, 128);
-    const texture = new THREE.TextureLoader().load('/Images/map2.webp');
-    const material = new THREE.MeshBasicMaterial({ map: texture });
-    const earth = new THREE.Mesh(geometry, material);
-    scene.add(earth);
-
-    function animate() {
-      requestAnimationFrame(animate);
-      earth.rotation.y += 0.002;
-      renderer.render(scene, camera);
+                        {selectedPie === "Contagiosité" ? (
+              <div className="w-[40%]">
+                <Pie data={data2} options={options2} />
+              </div>
+            ) : selectedPie === "Mortalité" ? (
+              <div className="w-[40%]">
+                <Pie data={data3} options={options3} />
+              </div>
+            ) : null}
+                       
+                    </div>
+            </>
+        )
     }
-
-    animate();
-
-    function handleResize() {
-      const width = div.clientWidth; // Utiliser la largeur de la div
-      const height = div.clientHeight; // Utiliser la hauteur de la div
-      renderer.setSize(width, height);
-      camera.aspect = width / height;
-      camera.updateProjectionMatrix();
-    }
-
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }
-
-  useEffect(() => {
-    returnplanete()
-  }, []);
-
-  const returnCanva = () => {
-
-      return (
-        <>
-          <div ref={divRef} className="w-full h-full relative overflow-hidden">
-            <canvas ref={canvasRef} style={{ position: 'absolute', top: 0, left: 0 }} />
-          </div>
-        </>
-      );
+    
   };
 
 
-useEffect(()=>{
-  returnCanva()
-},[affChart])
 
-// Fonction pour calculer la corrélation de Pearson entre deux paires de valeurs
-function coefficientDeCorrelationPearson(x1, y1, x2, y2) {
-  // Calculer la moyenne pour chaque ensemble de données
-  const moyenneX = (x1 + x2) / 2;
-  const moyenneY = (y1 + y2) / 2;
 
-  // Calculer les écarts par rapport à la moyenne
-  const ecartX1 = x1 - moyenneX;
-  const ecartY1 = y1 - moyenneY;
-  const ecartX2 = x2 - moyenneX;
-  const ecartY2 = y2 - moyenneY;
 
-  // Calculer les produits des écarts
-  const produitEcartXY = ecartX1 * ecartY1 + ecartX2 * ecartY2;
 
-  // Calculer les carrés des écarts
-  const carreEcartX1 = ecartX1 ** 2;
-  const carreEcartY1 = ecartY1 ** 2;
-  const carreEcartX2 = ecartX2 ** 2;
-  const carreEcartY2 = ecartY2 ** 2;
 
-  // Calculer les sommes nécessaires
-  const sommeProduitEcart = produitEcartXY;
-  const sommeCarreEcartX = carreEcartX1 + carreEcartX2;
-  const sommeCarreEcartY = carreEcartY1 + carreEcartY2;
 
-  // Calculer le coefficient de corrélation de Pearson
-  const numerateur = sommeProduitEcart;
-  const denominateur = Math.sqrt(sommeCarreEcartX * sommeCarreEcartY);
 
-  return numerateur / denominateur;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const canvasRef = useRef(null);
+const divRef = useRef(null); // Référence à la div pour le rendu
+const returnplanete = ()=>{
+  const div = divRef.current; // La div pour le rendu
+  const width = div.clientWidth;
+  const height = div.clientHeight;
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+  camera.position.set(0, 0, 10); // Modifier la position de la caméra pour voir la planète
+
+  const renderer = new THREE.WebGLRenderer({ canvas: canvasRef.current, alpha: true }); // Active la transparence du fond
+  renderer.setSize(width, height);
+  renderer.setClearColor(0x000000, 0); // Couleur de fond noire et totalement transparente
+
+  const geometry = new THREE.SphereGeometry(4.75, 128, 128);
+  const texture = new THREE.TextureLoader().load('/Images/map2.webp');
+  const material = new THREE.MeshBasicMaterial({ map: texture });
+  const earth = new THREE.Mesh(geometry, material);
+  scene.add(earth);
+
+  function animate() {
+    requestAnimationFrame(animate);
+    earth.rotation.y += 0.002;
+    renderer.render(scene, camera);
+  }
+
+  animate();
+
+  function handleResize() {
+    const width = div.clientWidth; // Utiliser la largeur de la div
+    const height = div.clientHeight; // Utiliser la hauteur de la div
+    renderer.setSize(width, height);
+    camera.aspect = width / height;
+    camera.updateProjectionMatrix();
+  }
+
+  window.addEventListener('resize', handleResize);
+
+  return () => {
+    window.removeEventListener('resize', handleResize);
+  };
+  
+
 }
 
-// Données pour l'Afghanistan
-const testsAfghanistan = 1349589;
-const casesAfghanistan = 230000;
+useEffect(() => {
+  returnplanete()
+}, []);
 
-// Données pour la France
-const testsFrance = 1549589;
-const casesFrance = 230001;
+const returnCanva = () => {
 
+    return (
+      <>
+        <div ref={divRef} className="w-full h-full relative top-0 left-0">
+          <canvas ref={canvasRef} style={{ position: 'absolute', top: 0, left: 0 }} />
+        </div>
+      </>
+    );
+};
 
-const testsitaliee= 1749589;
-const casesItalie = 260001;
 
-// Calculer le coefficient de corrélation de Pearson
-const correlation = coefficientDeCorrelationPearson(testsAfghanistan, casesAfghanistan, testsFrance, casesFrance);
+useEffect(()=>{
+returnCanva()
+},[affChart])
 
-// Afficher le résultat dans la console
-console.log("Coefficient de corrélation de Pearson :", correlation);
 
 
 
 
 
 
+const [earthIsClicked,setEarthIsClicked] = useState(true);
+const clickingEarth = ()=>{
+    setClickCas(false);
+    setClickDeaths(false);
+    setClickVaccins(false);
+    setEarthIsClicked(!earthIsClicked);
+}
+
+
+
+const [clickCas,setClickCas]= useState(false);
+const clickingCas= ()=>{
+    setClickCas(!clickCas);
+    console.log(clickCas);
+    setClickDeaths(false);
+    setClickVaccins(false);
+    setEarthIsClicked(false);
+}
+
+
+const [clickDeaths,setClickDeaths]= useState(false);
+const clickingDeaths= ()=>{
+    setClickDeaths(!clickDeaths);
+    console.log(clickDeaths);
+    setClickVaccins(false);
+    setEarthIsClicked(false);
+    setClickCas(false);
+}
 
+const [clickVaccins,setClickVaccins]= useState(false);
+const clickingVaccins= ()=>{
+    setClickVaccins(!clickVaccins);
+    console.log(clickVaccins);
+    setEarthIsClicked(false);
+    setClickCas(false);
+    setClickDeaths(false);
+}
 
 
 
+const serie1 = [0.035, 0.013, 0.004, 0.007, 0.005, 0.018, 0.022, 0.005, 0.012, 0.008];
+const serie2 = [0.41, 0.77, 0.79, 0.78, 0.87, 0.26, 0.08, 0.65, 0.67, 0.89];
 
+const meanSerie1 = math.mean(serie1);
+const meanSerie2 = math.mean(serie2);
 
+const covariance = math.sum(serie1.map((x, i) => (x - meanSerie1) * (serie2[i] - meanSerie2))) / serie1.length;
 
+const varianceSerie1 = math.variance(serie1);
+const varianceSerie2 = math.variance(serie2);
 
+const correlation = covariance / (Math.sqrt(varianceSerie1) * Math.sqrt(varianceSerie2));
+const correlationWith3Decimals = correlation.toFixed(3);
+useEffect(() => {
+    console.log(meanSerie1)
+    console.log(covariance);
+    console.log(correlation);
+}, []);
 
 
 
@@ -2808,58 +2572,87 @@ console.log("Coefficient de corrélation de Pearson :", correlation);
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+const dataScatterChart = {
+    labels: ['Afhanistan', 'Argentine', 'France', 'Finland', 'Portugal', 'Angola', 'Senegal', 'Estonie', 'Inde', 'Cuba'],
+    datasets: [{
+        label: 'Pays',
+        data: [
+            { x: 0.035, y: 0.41 },
+            { x: 0.013, y: 0.77 },
+            { x: 0.004, y: 0.79 },
+            { x: 0.007, y: 0.78 },
+            { x: 0.005, y: 0.87 },
+            { x: 0.018, y: 0.26 },
+            { x: 0.022, y: 0.08 },
+            { x: 0.005, y: 0.65 },
+            { x: 0.012, y: 0.67 },
+            { x: 0.008, y: 0.89 },
+        ],
+        backgroundColor: 'rgba(75, 192, 192, 0.5)',
+        borderColor: 'rgba(75, 192, 192, 1)',
+        borderWidth: 1,
+    }],
+};
+
+  
+  // Options du Scatter Chart
+  const optionsScatterChart = {
+    plugins: {
+        legend: {
+            display: affLeg,
+        },
+    },
+    responsive: true,
+    scales: {
+        xAxes: [{
+            type: 'linear',
+            position: 'bottom',
+            scaleLabel: {
+                display: true,
+                labelString: 'Axe X',
+            },
+        }],
+        yAxes: [{
+            type: 'linear',
+            position: 'left',
+            scaleLabel: {
+                display: true,
+                labelString: 'Axe Y',
+            },
+            ticks: {
+                suggestedMax: 1,
+            },
+        }],
+    },
+};
+
+
+
+
+
+
+
+
+const [clickLegendeInfo,setClickLegendeInfo] = useState(false);
+
+const clikingLegendInfo = () =>{
+  setClickLegendeInfo(!clickLegendeInfo);
+}
+
+
+
+
+
+const [affInfo, setAffInfo] = useState(true);
+
+useEffect(() => {
+  const intervalId = setInterval(() => {
+    setAffInfo((prevAffInfo) => !prevAffInfo);
+  }, 7000);
+
+  // Nettoyer l'intervalle lorsque le composant est démonté
+  return () => clearInterval(intervalId);
+}, []);
 
 
 
@@ -2867,6 +2660,7 @@ console.log("Coefficient de corrélation de Pearson :", correlation);
 
   return (
     <>
+    
       <div className="sidegauche  z-999 flex justify-center items-center p-4">
         <div className="h-full w-full bg-white rounded-lg relative overflow-hidden vraisidegauche">
 
@@ -2887,7 +2681,7 @@ console.log("Coefficient de corrélation de Pearson :", correlation);
     onChange={(e) => {
         setSelectedCountry(e.target.value);
     }}
-    className="border-2 border-bleuc2 rounded-md mt-2 p-2"
+    className="border-2 border-vertc1 rounded-md mt-2 p-2"
     >
     <option value="">Sélectionnez un pays</option>
     {allCountry.map((country, index) => (
@@ -2903,7 +2697,10 @@ console.log("Coefficient de corrélation de Pearson :", correlation);
             </div>
 
 
-            <div className="w-full h-[70%] flex flex-col items-end justify-end ">
+            <div className="w-full h-[70%] flex flex-col items-end justify-end relative ">
+            <img src={truc1} alt="" className="absolute z-0 top-0 left-0 w-16 h-16 virusicon" />
+            <img src={truc2} alt="" className="absolute z-0 top-32 left-16 w-16 h-16 virusicon2" />
+            <img src={truc4} alt="" className="absolute z-0 bottom-56 right-16 w-16 h-16 virusicon3" />
                 <div className="w-full h-[50%] py-4 px-4">
                     <div className="w-full h-full  flex flex-col justify-end">
                         <div className="flex flex-col gap-2">
@@ -2952,21 +2749,37 @@ console.log("Coefficient de corrélation de Pearson :", correlation);
                         </div>
                     </div>
                 </div>
+                    
             </div>
 
         </div>
       </div>
+
+
+
+
+
+
+
+
+
+
+
+
 
       <main className="main">
         <div className="dashboardintit flex justify-between ">
           <div className="p-8 ">
             <div className="w-36 h-10 bg-white rounded-full relative flex items-center dashboardColor">
               <div className="w-10 h-10 rounded-full flex justify-center items-center absolute border-2 border-[#F2F4F9] dashboardColor">
-                <BsFillHouseDoorFill size={25} color={bleuc3} />
+                
+              <BsFillHouseDoorFill size={25} color={bleuc3} onClick={(e) => { setSelectedCountry("") }} className="cursor-pointer" />
+                
               </div>
               <p className="ml-[48px] italic">Dashboard</p>
             </div>
           </div>
+          
           {affChart && (
             <>
             <div className="flex items-center h-full">
@@ -2974,6 +2787,9 @@ console.log("Coefficient de corrélation de Pearson :", correlation);
           </div>
             </>
           )}
+          <div className="my-auto ">
+            {affChart ? <p className="font-bold text-3xl text-bleuc3">{selectedCountry}</p> : <p className="font-bold text-3xl text-bleuc3 p-6">Monde</p>}
+          </div>
          
         </div>
 
@@ -2987,29 +2803,217 @@ console.log("Coefficient de corrélation de Pearson :", correlation);
 
         <div className="maingrid px-8 py-6 shadow-xl">
           <div className="card shadow-lg flex overflow-hidden relative">
-          <div className="absolute top-0 left-0 w-full h-full polygonerectangle ">
+          <img src={truc1} alt="" className="absolute z-0 top-8 right-8 w-16 h-16 virusicon3" />
+
+          
+
+          <div className="absolute top-0 left-0 polygonerectangle ">
             <div className="flex">
                 <div className="containerpath">
                   <div className="polygone">
                   {!affChart ? <p className="ml-[40px] text-sm font-bold">
-                      Contagiosité dans le monde
-                    </p> : <p className="ml-[40px] text-sm font-bold"> Contagiosité, Létalité </p>}
+                 Données Globales
+                    </p> : <p className="ml-[40px] text-sm font-bold"> Données {selectedCountry} </p>}
                   </div>
                 </div>
             </div>
          </div>
-            {returnCard1InfoInit()}
-            {!affChart && (
-            <>
-           <div className="w-full h-full p-4 relative flex justify-center items-center">
-                <Pie data={dataPasAffChart1} options={optionsPasAffChart1} className="mt-4"/>
-           </div>
-           <div className="absolute bottom-0 right-0 m-2 w-[40px] h-[40px] bg-white border-2 border-bleuc2 rounded shadow-md flex justify-center items-center">
-                <BsPieChart size={27} color={bleuc3} />
-           </div>
-            </>
+
+         <div className="card1 h-wull w-full relative  ">
+         
+            <div className="flex h-full w-full">
+                
             
+            <div className="iconegauche w-[13%] h-full ">
+                    <div className="flex flex-col w-full h-full justify-center items-center gap-1 mt-4 ">
+                        <div className="flex-col flex ">
+                            <button
+                            className={`flex h-16 w-16 border-2 ${affChart ? "border-vertc2" : "border-bleuc2"} justify-center items-center shadow rounded-lg bouttonearth ${earthIsClicked && !affChart ? 'bg-bleuc2' : (earthIsClicked && affChart) ? 'bg-vertc2' : ''} ease-in-out duration-200`}
+
+                            onClick={clickingEarth}
+                            >
+                                <FaEarthAfrica size={35} color={bleuc3} />                    
+                            </button>
+                            <span className="text-center text-[11px] text-black font-bold"> {affChart ? "Pays"  : "Monde" }</span>
+                        </div>
+
+                        <div className="flex-col flex ">
+                        <button className={`flex h-16 w-16 border-2 ${affChart ? "border-vertc2" : "border-bleuc2"} justify-center items-center shadow rounded-lg bouttonearth ${clickCas ? 'bg-bleuc2' : ''} ${clickCas && affChart ? 'bg-vertc2' : ''} ease-in-out duration-200`} onClick={clickingCas}>
+                        {affChart ? <img  src={gravevirus} alt="Grave" className="p-1"/>  : <BiSolidVirus color={bleuc3} size={40}/> }
+                            </button>
+                            <span className="text-center text-[11px] text-black font-bold">{affChart ? "Léta+Cont" : "Contagiosité" }</span>
+                        </div>
+
+                        <div className="flex-col flex ">
+                            <button className={`flex h-16 w-16 border-2 ${affChart ? "border-vertc2" : "border-bleuc2"} justify-center items-center shadow rounded-lg bouttonearth ${clickDeaths ? 'bg-bleuc2' : ''} ${clickDeaths && affChart ? 'bg-vertc2' : ''} ease-in-out duration-200`} onClick={clickingDeaths}>
+                            {affChart ? <img src={radarimg} alt="" className="p-1"/> : <BiGitCompare size={40}  color={bleuc3}/> }
+                            </button>
+                            <span className="text-center text-[11px] text-black font-bold">{!affChart ? "Corrélation" : "Guérris +"}</span>
+                        </div>
+
+                        <div className="flex-col flex ">
+                            <button className={`flex h-16 w-16 border-2 ${affChart ? "border-vertc2" : "border-bleuc2"} justify-center items-center shadow rounded-lg bouttonearth ${clickVaccins ? 'bg-bleuc2' : ''} ${clickVaccins && affChart ? 'bg-vertc2' : ''} ease-in-out duration-200`} onClick={clickingVaccins}>
+                                {affChart ? <PiTestTubeFill size={40}  color={bleuc3}/> : <TbVaccine size={40}  color={bleuc3}/> }                    
+                            </button>
+                            <span className="text-center text-[11px] text-black font-bold">{!affChart ? "Vaccins" : "Tests"}</span>
+                        </div>
+
+                    </div>
+            </div>
+
+            <div className="partiedroite w-[87%] h-full relative">
+            
+            {affChart && clickVaccins && (
+                    <>
+                            
+                               
+                            <div className="flex flex-col justify-center items-center h-full w-full">
+                        <h2 className="text-black text-lg font-bold">
+                            Comparaison Nombre de Test avec :
+                        </h2>
+                        <select
+                    value={selectedCountry2}
+                    onChange={(e) => setSelectedCountry2(e.target.value)}
+                    className="select2 border-2 border-bleuc2 p-1 rounded-lg"
+                    >
+                    <option value="">Selectionner un pays</option>
+                    {allCountry.map((country, index) => (
+                        <option key={index} value={country}>
+                        {country}
+                        </option>
+                    ))}
+                </select>
+                        <div className="w-[90%]">
+                        <Bubble data={dataBubble} options={optionsBubble}/>
+                      </div>  
+                    </div>
+                                
+                            
+                    </>
+                )} 
+
+            {affChart && clickDeaths && (
+                    <>
+                            
+                               
+                            <div className="flex flex-col justify-center items-center h-full w-full">
+                        <h2 className="text-black text-lg font-bold">
+                            Taux de rétablissement / Morts / Cas
+                        </h2>
+                        <div className="w-[45%]">
+                        <Radar data={dataRadar} options={optionsRadar} />
+                      </div>  
+                    </div>
+                                
+                            
+                    </>
+                )} 
+            
+            {affChart && clickCas && (
+                    <>
+                            
+                               
+                                {returnCard1InfoInit()}
+                                
+                            
+                    </>
+                )} 
+
+            {affChart && earthIsClicked && (
+                    <>
+                            
+                                <div className="flex justify-center items-center h-full w-full">
+                                <p className="text-[3em] text-vertc2 infosRapide"> {selectedCountry} </p> 
+                                </div>
+                            
+                    </>
+                )} 
+
+                {affChart && earthIsClicked && (
+                    <>
+                            
+                                <div className="flex justify-center items-center h-full w-full">
+                                <p className="text-[3em] text-vertc2 infosRapide"> {selectedCountry} </p> 
+                                </div>
+                            
+                    </>
+                )} 
+
+
+
+                {!affChart && clickCas && (
+                    <>
+                    <div className="flex flex-col justify-center items-center h-full w-full">
+                        <h2 className="text-black text-lg font-bold">
+                            Contagiosité dans le monde
+                        </h2>
+                        <div className="w-[50%]">
+                    <Pie data={dataPasAffChart1} options={optionsPasAffChart1} className=""/> 
+                      </div>  
+                    </div>
+                    </>
+                )}
+                {!affChart && clickDeaths && (
+                    <>
+                    <div className="flex flex-col justify-center items-center h-full w-full">
+                        <button className="absolute top-0 right-0 py-2 px-4 font-bold border-2 border-vertc2 mx-4 my-2 rounded-lg shadow-md hover:bg-gray-50" onClick={clsRouge}>En savoir +</button>
+                    <h2 className="text-black text-lg font-bold">
+                            Taux de corrélation : {correlationWith3Decimals}
+                        </h2>
+                        <div className="w-[70%]">
+                     <Scatter data={dataScatterChart} option={optionsScatterChart}/> 
+                      </div>  
+                    </div>
+                    </>
+                )}
+                {!affChart && clickVaccins && (
+                    <>
+                    <div className="flex flex-col justify-center items-center h-full w-full">
+                    <h2 className="text-black text-lg font-bold">
+                            Vaccins dans le monde
+                        </h2>
+                        <div className="w-[50%]">
+                    <PolarArea data={polarAreadata} options={polarAreaoptions}/>
+                      </div>  
+                    </div>
+                    </>
+                )}         
+            {affPlanetee && (
+            <>
+                {returnCanva()}          
+                
+            </>
             )}
+            {earthIsClicked && !affChart && (
+                <>
+                <p className="absolute bottom-0 right-0 p-2 text-black text-lg font-bold">
+                Cas Covid Monde : {casTTMonde}
+                </p>
+                </>
+            )}
+
+
+
+            
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+
+            </div>
+        </div>
+
+
+
+
           </div>
 
 
@@ -3018,40 +3022,36 @@ console.log("Coefficient de corrélation de Pearson :", correlation);
 
 
 
+          
+
+
+
+
+
+
+
+
           <div className="card shadow-lg overflow-hidden relative">
-          <div className="absolute top-0 left-0 w-full h-full polygonerectangle ">
-            <div className="flex">
-                <div className="containerpath">
-                  <div className="polygone">
-                    {!affChart ? <p className="ml-[40px] text-sm font-bold">
-                      Létalité par âge dans le monde
-                    </p> : <p className="ml-[40px] text-sm font-bold">Guérisons, Létalité, Contagiosité </p>}
-                  </div>
-                </div>
+          {!affChart && affInfo && (
+           
+              <>
+              <div className="w-[100%] h-[100%] absolute flex justify-center flex-col items-start bg-white continfo ">
+            <img src={infographiesanslegende} alt="" className="w-[80%] h-[80%] mx-auto " />
+            <div className="flex mx-auto mt-2">
+              <a download href={infographie} className="flex gap-2 justify-center items-center bg-white rounded hover:bg-gray-100 ease-in-out duration-150 border-2 border-vertc1 py-1 px-2">
+                  <p  download className="font-bold">
+                    Télécharger
+                  </p>
+                  <span>
+                    <IoMdDownload color={vertc1}/>
+                  </span>
+              </a>
+              
             </div>
-         </div>
-            {returnCard2InfoInit()}
-            {!affChart && (
-            <>
-           <div className="w-full h-full p-4 relative flex justify-center items-center">
-              <Bar data={dataPasAffChart2} options={optionsPasAffChart2} className="mt-4" />
-           </div>
-           <div className="absolute bottom-0 right-0 m-2 w-[40px] h-[40px] bg-white border-2 border-bleuc2 rounded shadow-md flex justify-center items-center">
-                <AiOutlineRadarChart size={33} color={bleuc3} />
-           </div>
-            </>
-            
-            )}
           </div>
-
-
-
-
-
-
-
-
-          <div className="card shadow-lg overflow-hidden relative">
+              </>
+            
+          )}
           <div className="absolute top-0 left-0 polygonerectangle ">
             <div className="flex">
                 <div className="containerpath">
@@ -3064,105 +3064,36 @@ console.log("Coefficient de corrélation de Pearson :", correlation);
             </div>
          </div>
                     {returnCard3Infos()}
-                    {!affChart && (
+                    {!affChart && !affInfo && (
             <>
-           <div className="flex w-full h-full justify-center items-center">
-                        <div className="w-[80%]">
+           <div className="flex w-full h-full justify-center items-center ">
+           
+                        <div className="w-[80%] continfo">
                           <Doughnut data={dataDoughnut2} options={optionsDoughnut2}/>
                         </div>
+                        
                     </div>
-           <div className="absolute bottom-0 right-0 m-2 w-[40px] h-[40px] bg-white border-2 border-bleuc2 rounded shadow-md flex justify-center items-center">
-                <MdDonutLarge size={30} color={bleuc3} />
-           </div>
-            </>
-            
-            )}
-                    
-                    
-          </div>
-
-
-
-
-
-          <div className="card shadow-lg overflow-hidden relative">
-          <div className="absolute top-0 left-0 w-full h-full polygonerectangle ">
-            <div className="flex">
-                <div className="containerpath">
-                  <div className="polygone">
-                  {!affChart ? <p className="ml-[40px] text-sm font-bold">
-                  Taux de vaccinés dans le monde
-                    </p> : <p className="ml-[40px] text-sm font-bold"> Nombre de Tests, Cas, Morts </p>}
-                  </div>
-                </div>
-            </div>
-         </div>
-                    {returnChartBubble()}
-                    {!affChart && (
-            <>
-
-            <p className="absolute top-0 left-0 py-[24px] px-2 text-sm italic">*1ère dose</p>
-          <div className="w-[full] h-full p-4 relative flex justify-center items-center">
-          <PolarArea data={polarAreadata} options={polarAreaoptions} className="mt-4" />
-           </div>
            
-           <div className="absolute bottom-0 right-0 m-2 w-[40px] h-[40px] bg-white border-2 border-bleuc2 rounded shadow-md flex justify-center items-center">
-                <MdBubbleChart size={35} color={bleuc3} />
-           </div>
             </>
             
             )}
+             
+                    
                     
           </div>
 
 
 
 
-          <div className="card shadow-lg overflow-hidden relative">
-          <div className="absolute top-0 left-0 w-full h-full polygonerectangle ">
-            <div className="flex">
-                <div className="containerpath">
-                  <div className="polygone">
-                  {!affChart ? <p className="ml-[40px] text-sm font-bold">
-                  Données globales du monde entier
-                    </p> : <p className="ml-[40px] text-sm font-bold"> Données du pays </p>}
-                  </div>
-                </div>
-            </div>
-         </div>
-          {affChart && (
-            <>
-                    
-                        <div className="flex justify-center items-center h-full w-full">
-                        <p className="text-[2em] text-vertc1 infosRapide">{selectedCountry}</p> 
-                        </div>
-                    
-            </>
-          )}
-          {affPlanetee && (
-            <>
-           {returnCanva()}
-           {
-            !affChart && (
-              <div className="absolute bottom-0 right-0 m-2 w-[40px] h-[40px] bg-white border-2 border-bleuc2 rounded shadow-md flex justify-center items-center">
-           <p className="text-3xl font-bold text-bleuf1">
-            <span className="text-stroke">T</span>
-          </p>
 
-           </div>
-            )
-           }
-            </>
-            
-            )}
-          
-
-          </div>
+         
 
 
 
 
           <div className="card cardBar shadow-lg overflow-hidden relative">
+          <img src={truc5} alt="" className="absolute z-0 top-16 left-16 w-16 h-16 virusicon" />
+          <img src={truc6} alt="" className="absolute z-0 bottom-16 right-16 w-16 h-16 virusicon2" />
           <div className="absolute top-0 left-0 polygonerectangle ">
             <div className="flex">
                 <div className="containerpath2">
@@ -3230,7 +3161,7 @@ console.log("Coefficient de corrélation de Pearson :", correlation);
                           Nbr Morts
                         </th>
                         <th>
-                        Taux de létalité
+                        Taux de Mortalité
                         </th>
                         <th>
                           Actions
@@ -3269,9 +3200,8 @@ console.log("Coefficient de corrélation de Pearson :", correlation);
             {returnBtnImpr()}
            
            </div>
-           <div className="absolute bottom-0 right-0 m-2 w-[40px] h-[40px] bg-white border-2 border-bleuc2 rounded shadow-md flex justify-center items-center">
-                <MdBarChart size={35} color={bleuc3} />
-           </div>
+           
+           
             </>
             
             )}
@@ -3283,22 +3213,157 @@ console.log("Coefficient de corrélation de Pearson :", correlation);
         <ToastContainer />
       </main>
 
+
+
+
+
+
+
+
+
+
       <div className="sidedroite">
-        
-          <div className="w-full h-full p-4 flex justify-center items-center">
-            <div className="h-full w-full bg-white rounded-lg vraisidedroite ">
-            {ouvrDiv && (
-              <>
-              <p>Hey</p>
-              </>
+      
+          <div className="w-full h-full p-4 flex justify-center items-center relative ">
+          <img src={truc1} alt="" className="absolute z-0 bottom-8 right-32 w-16 h-16 virusicon2" />
+
+            <div className={`absolute w-full h-full z-999 legendeinfo ${(affInfo && !affChart) && "legendendeinfoclick"} flex justify-center`}>
+                  <img src={infographielegende} alt="" className={`h-[90%] p-8 imginfoo`} />
+            </div>
+            <div className="h-full w-full flex flex-col bg-white rounded-lg vraisidedroite  p-8  ">
+            
+            <h1 className={`text-center text-black font-bold text-xl ${ajoutClasseRouge ? "text-red-500 scale-150 " : "text-black"} ease duration-200 `}>Informations</h1>
+            <div className="mt-2 w-full h-[2px] flex justify-center items-center">
+                <div className="h-[2px] w-[70%] bg-bleuf1">
+
+                </div>
+            </div>
+            <div className="flex flex-col mt-4 gap-3">
+
+
+
+            {affChart &&  (
+                <>
+                <div className="flex flex-col gap-6">
+                    <p className="text-center font-bold">Données essentielles sur {selectedCountry}</p>
+                    <div className="p1">
+                      <p className="text-justify text-md ">Nombre total de cas</p>                      
+                      <p className="text-end text-vertc1 font-bold">{casActive}</p>
+                    </div>
+                    <div className="p2">
+                      <p className="text-justify text-md">Nombre total de morts</p>                      
+                      <p className="text-end text-vertc1 font-bold">{deathsTT}</p>
+                    </div>
+                    <div className="p3">
+                      <p className="text-justify text-md">Nombre total de rétablissements</p>                      
+                      <p className="text-end text-vertc1 font-bold">{guerisTT}</p>
+                    </div>
+                    <div className="p4">
+                      <p className="text-justify text-md ">Nombre total de tests</p>                      
+                      <p className="text-end text-vertc1 font-bold">{nbrTestss}</p>
+                    </div>
+                    <div className="p5">
+                      <p className="text-justify text-md">Nombre total de cas actifs</p>                      
+                      <p className="text-end text-vertc1 font-bold">{CasVrmActive}</p>
+                    </div>
+
+                    <h2 className="p6 text-center font-bold">
+                      Données additionnelles
+                    </h2>
+                    <div className="p7">
+                      <p className="text-justify text-md">Population</p>                      
+                      <p className="text-end text-vertc1 font-bold">{pop}</p>
+                    </div>
+                    <div className="p8">
+                    <p className="text-md text-center text-sm italic">Depuis le début de la pandémie</p>
+                    <p className="text-md text-center text-sm italic">16 / 11 / 19</p>
+
+                    </div>
+                   
+                </div>
+                </>
             )}
+
+
+            {!affChart && clickDeaths &&  !affInfo &&(
+                <>
+                <div>
+                    <p className={`text-center font-bold txtnoirtor ${ajoutClasseRouge ? "text-red-500 scale-150 " : "text-black"} ease duration-200`}> {correlationWith3Decimals}</p>
+                    <p className="text-black text-justify p3">L'axe des Y représente le taux de vaccinés d'un pays et l'axe des X représente le taux de mortalité de ce même pays. L'objectif de ce graphique est de comprendre si il y a corrélation entre le fait d'être vacciné et le fait de mourrir. Cela permet de comprendre si le vaccin est efficace.</p>
+                    <p className="text-center mt-2 p4">Pour l'obtenir on calcul :</p>
+                    <p className="text-center p5">La moyenne de la série 1 : <span className="italic text-vertc1"> {meanSerie1}</span></p>
+                    <p className="text-center p6">La moyenne de la série 2 : <span className="italic text-vertc1"> {meanSerie2}</span></p>
+                    <p className="text-center p7">les variances respectives des deux séries soit :</p>               
+                    <p className="text-center italic p8">V1: <span className="text-vertc1"> {varianceSerie1}</span></p>
+                    <p className="text-center italic p9">V2: <span className="text-vertc1">{varianceSerie2}</span> </p>                
+                    <p className="text-center p10">Ensuite on s'attaque à la covariance :</p>
+                    <p className="text-center text-vertc1 p11">{covariance}</p>
+                    <p className="text-center p12"> Pour finir avec le taux de corrélation :</p>
+                    <p className="text-center text-bleuf1 font-bold p13">{correlation}</p>
+                    <p className="text-center p14">On en déduit qu'il n'y a pas forcément de corrélation entre le fait de se faire vacciner et le taux de mortalité d'un pays. </p>
+                </div>
+                </>
+            )}
+
+
+            {!affChart && (earthIsClicked || clickVaccins || clickCas) && !affInfo && (
+                <>
+                <div>
+                <p className="text-justify text-md p1">Nombre total de cas covid dans le monde 
+                </p>
+                <p className="text-end text-vertc1 font-bold p2">{casTTMonde}</p>
+                </div>
+                <div>
+                <p className="text-justify text-md p3">Nombre de cas actifs total en <span className="text-bleuf1">Europe</span>
+                </p>
+                <p className="text-end font-bold text-bleuf1 p4">{casActiveEurope}</p>
+                </div>
+                <div>
+                <p className="text-justify text-md p5">Nombre de cas actifs total en <span className="text-bleuc2">Afrique</span>
+                </p>
+                <p className="text-end text-bleuc2 font-bold p6">{casActiveAfrica}</p>
+                </div>
+                <div>
+                <p className="text-justify text-md p7">Nombre de cas actifs total en <span className="text-bleuc3">Océanie</span>
+                </p>
+                <p className="text-end text-bleuc3 font-bold p8">{casActiveOceania}</p>
+                </div>
+                <div>
+                <p className="text-justify text-md p9">Nombre de cas actifs total en <span className="text-vertc1">Asie</span>
+                </p>
+                <p className="text-end text-vertc1 font-bold p10">{casActiveAsia}</p>
+                </div>
+                <div>
+                <p className="text-justify text-md p11">Nombre de cas actifs total en <span className="text-vertc2">Amérique</span>
+                </p>
+                <p className="text-end text-vertc2 font-bold p12">{casActiveAmerica}</p>
+                </div>
+                <div className="mt-4 ">
+                <p className="text-justify text-md p13">Nombre de cas total 
+                </p>
+                <p className="text-end text-vertc2 font-bold p14">770 000 000</p>
+                </div>
+                
+                <div className="p15">
+                    <p className="text-md text-center text-sm italic">Depuis le début de la pandémie</p>
+                    <p className="text-md text-center text-sm italic">16 / 11 / 19</p>
+
+                    </div>
+                
+                
+                
+                </>
+            )}
+            </div>
+            
 
             </div>
           </div>
-        
+          
       </div>
+      {returnLoading()}
       </>
   );
 }
 
-export default Mainlayout;
+export default Mainlayout2;

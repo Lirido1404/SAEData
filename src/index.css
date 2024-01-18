@@ -26,6 +26,48 @@
   "sidegauche main sidedroite";
 }
 
+@media screen and (max-width: 800px) {
+  .main{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .maingrid{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .bodyperso{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-wrap: nowrap;
+    overflow: auto;
+  }
+
+  .card{
+    height: 80%;
+  }
+
+  .iconegauche button{
+    width: 32px;
+    height: 32px;
+    gap: 12px;
+    
+  }
+
+  .iconegauche span{
+    font-size: 10px;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
 .main{
   background-color: #F2F4F9;
   grid-area: main;
@@ -63,10 +105,10 @@
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 0.5fr 0.5fr 1fr;
-  gap: 50px;
+  gap: 30px;
   grid-template-areas: 
-  "c1 c2 c3"
-  "c4 c5 c3"
+  "c1 c1 c3"
+  "c1 c1 c3"
   "c6 c6 c6"
   ;
 }
@@ -76,29 +118,27 @@
   background-color: white;
 }
 
+
+
+
+
+
+
+
+
 .card:nth-child(1){
-grid-area: c5;
+grid-area: c1;
 }
 
 .card:nth-child(2){
-  grid-area: c2;
+  grid-area: c3;
 }
 
 .card:nth-child(3){
-    grid-area: c3;
+    grid-area: c6;
 }
 
-.card:nth-child(4){
-  grid-area: c4;
-}
 
-.card:nth-child(5){
-  grid-area: c1;
-}
-
-.card:nth-child(6){
-  grid-area: c6;
-  }
 
   
   .carduno {
@@ -675,3 +715,168 @@ p{
   transition: 0.3s ease-in-out;
 }
 
+@keyframes trop {
+  0%{
+    transform: translateY(-8px);
+
+  }
+  100%{
+    transform: translateY(0px);
+  }
+}
+
+
+.p1{
+  animation: trop 1s ease-in-out forwards, opacity 0.5s ease-in-out forwards;
+  opacity: 0;
+}
+
+
+.p2{
+  animation: trop 1s ease-in-out forwards 0.10s, opacity 0.5s ease-in-out forwards 0.10s;
+  opacity: 0;
+}
+
+
+.p3{
+  animation: trop 1s ease-in-out forwards 0.20s, opacity 0.5s ease-in-out forwards 0.20s;
+  opacity: 0;
+}
+
+
+.p4{
+  animation: trop 1s ease-in-out forwards 0.3s, opacity 0.5s ease-in-out forwards 0.3s;
+  opacity: 0;
+}
+
+
+.p5{
+  animation: trop 1s ease-in-out forwards 0.4s, opacity 0.5s ease-in-out forwards 0.4s;
+  opacity: 0;
+}
+
+
+.p6{
+  animation: trop 1s ease-in-out forwards 0.5s, opacity 0.5s ease-in-out forwards 0.5s;
+  opacity: 0;
+}
+
+
+.p7{
+  animation: trop 1s ease-in-out forwards 0.6s, opacity 0.5s ease-in-out forwards 0.6s;
+  opacity: 0;
+}
+
+
+.p8{
+  animation: trop 1s ease-in-out forwards 0.7s, opacity 0.5s ease-in-out forwards 0.7s;
+  opacity: 0;
+}
+
+
+.p9{
+  animation: trop 1s ease-in-out forwards 0.8s, opacity 0.5s ease-in-out forwards 0.8s;
+  opacity: 0;
+}
+
+
+.p10{
+  animation: trop 1s ease-in-out forwards 0.9s, opacity 0.5s ease-in-out forwards 0.9s;
+  opacity: 0;
+}
+
+
+.p11{
+  animation: trop 1s ease-in-out forwards 1s, opacity 0.5s ease-in-out forwards 1s;
+  opacity: 0;
+}
+
+.p12{
+  animation: trop 1s ease-in-out forwards 1.1s, opacity 0.5s ease-in-out forwards 1.1s;
+  opacity: 0;
+}
+
+.p13{
+  animation: trop 1s ease-in-out forwards 1.20s, opacity 0.5s ease-in-out forwards 1.20s;
+  opacity: 0;
+}
+
+.p14{
+  animation: trop 1s ease-out forwards 1.3s, opacity 0.5s ease-out forwards 1.3s;
+  opacity: 0;
+}
+.p15{
+  animation: trop 1s ease-out forwards 1.4s, opacity 0.5s ease-out forwards 1.4s;
+  opacity: 0;
+}
+
+
+.loaderrr{
+  animation: opc2 0.5s ease-in-out forwards ;
+}
+
+
+@keyframes opc2{
+  0%{
+    opacity: 0%;
+  }
+  100%{
+    opacity: 75%;
+  }
+}
+
+
+.legendeinfo{
+  transform: translateY(-100%);
+  transition: 2s ease-in-out;
+  
+}
+
+.legendendeinfoclick{
+  transition: 1.5s ease-in-out;
+  transform: translateY(5%);
+}
+
+
+
+
+
+.continfo{
+  animation: opacity 1.5s ease-in-out forwards;
+}
+
+.virusicon{
+  animation: flottement 8s infinite ease-in-out;
+}
+
+.virusicon2{
+  animation: flottement 8s infinite ease-in-out 2s ;
+}
+
+.virusicon3{
+  animation: flottement 8s infinite ease-in-out 3.25s ;
+}
+
+@keyframes flottement {
+
+  0%,
+  100% {
+    transform: translate(0, 0);
+    /* Position initiale */
+  }
+
+  25% {
+    transform: translate(2px, 2px);
+    /* Déplacement en haut à droite */
+  }
+
+  50% {
+    transform: translate(-4px, 6px);
+    /* Déplacement vers le haut à gauche */
+  }
+
+  75% {
+    transform: translate(4px, -2px);
+    /* Déplacement vers le bas à droite */
+  }
+}

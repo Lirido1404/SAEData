@@ -7,16 +7,7 @@ import { Pie } from 'react-chartjs-2';
 
 
 export const Modal = ({ isOpen, setIsOpen,openModal,handleMode,mode,setMode }) => {
-	const data = {
-		labels: ['Donnée 1', 'Donnée 2'],
-		datasets: [
-		  {
-			data: [10, 30],
-			backgroundColor: ['#FF6384', '#36A2EB'],
-			hoverBackgroundColor: ['#FF6384', '#36A2EB'],
-		  },
-		],
-	  };
+	
 	return (
 		<AnimatePresence>
 			{isOpen && (
@@ -73,8 +64,8 @@ export const Modal = ({ isOpen, setIsOpen,openModal,handleMode,mode,setMode }) =
 							>
 								<div className={` px-4 pt-5 pb-4 sm:p-6 sm:pb-4 ${mode === "light" ? "bg-white" : "bg-[#1a1a1a]"} `}>
 									<div className="sm:flex sm:items-start">
-										<div className="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full border-2 border-purple-100 sm:mx-0 sm:h-10 sm:w-10">
-										<BiSolidVirus size={30} color="rgb(168 85 247)"/>
+										<div className="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full border-2 border-bleuc2 sm:mx-0 sm:h-10 sm:w-10">
+										<BiSolidVirus size={30} color="#7fd3c4"/>
 
 										</div>
 										<div className={`mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left`}> 
@@ -100,7 +91,7 @@ export const Modal = ({ isOpen, setIsOpen,openModal,handleMode,mode,setMode }) =
 									<button
 										type="button"
 										tabIndex={0}
-										className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-purple-400 text-base font-medium text-white hover:bg-purple-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-700 sm:ml-3 sm:w-auto sm:text-sm"
+										className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-bleuc3 text-base font-medium text-white hover:bg-bleuc2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-bleuc2 sm:ml-3 sm:w-auto sm:text-sm"
 										onClick={() => setIsOpen(false)}
 									>
 										Continuer
